@@ -1,42 +1,18 @@
-import requests
-import sys
+import discord
+from discord.ext import commands
 
-class Exploit:
+prefix = "*" #you can change the prefix here
+bot = commands.Bot(command_prefix = prefix)
+MAGIC_CHAR = '\u202b'
 
-    MAGIC_CHAR = '\u202b'
-
-    def __init__(self, token, channel_id, message):
-        self.token = token
-        self.channel_id = channel_id
-        self.message = message
-        self.headers = {'Authorization': token}
-
-
-    def execute(self):
-        """ do the magik """
-        message = f'{self.MAGIC_CHAR} {self.message} {self.MAGIC_CHAR}'
-
-        res = requests.post(f'https://discordapp.com/api/v6/channels/{self.channel_id}/messages', headers=self.headers, json={'content': message})
-
-        if res.status_code == 200:
-            message_id = res.json()['id']
-
-            requests.patch(f'https://discordapp.com/api/v6/channels/{self.channel_id}/messages/{message_id}', headers=self.headers, json={'content': ' ' + message})
-
-
-def main():
-    if len(sys.argv) < 4:
-        print(f'Usage: py {sys.argv[0]} <token> <channel id> <message>')
-        sys.exit()
-
-    token = sys.argv[1]
-    channel_id = sys.argv[2]
-    message = sys.argv[3]
-
-    exploit = Exploit(token, channel_id, message)
-
-    exploit.execute()
-
-
-if __name__ == '__main__':
-    main()
+@bot.event
+async def on_ready():
+    print("it's ready")
+    
+@bot.command
+async def editglitch(ctx, message):
+	await ctx.message.delete()
+    msg = await ctx.send(message)
+	await msg.edit(content=f"{MAGIC_CHAR} {message} {MAGIC_CHAR}")
+                       
+bot.run("ur gay token", bot=False)
