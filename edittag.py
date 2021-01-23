@@ -2,13 +2,12 @@ import discord
 from discord.ext import commands
 
 prefix = "*" #you can change the prefix here
-bot = discord.Client()
 bot = commands.Bot(command_prefix = prefix)
 MAGIC_CHAR = '\u202b'
 
 @bot.event
 async def on_ready():
-    print("it's ready")
+	print("it's ready")
     
 @bot.command()
 async def editglitch(ctx, message):
