@@ -12,7 +12,7 @@ async def on_ready():
 @bot.command
 async def editglitch(ctx, message):
 	await ctx.message.delete()
-    msg = await ctx.send(message)
+    	msg = await ctx.send(message)
 	await msg.edit(content=f"{MAGIC_CHAR} {message} {MAGIC_CHAR}")
                        
 bot.run("ur gay token", bot=False)
